@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Bahja</string>
+    <string name="Month_Eng">Month</string>
+    <string name="Week_Eng">Week</string>
+    <string name="Day_Eng">Day</string>
+    <string name="Day_Arb">يوم</string>
+    <string name="Week_Arb">أسبوع</string>
+    <string name="Month_Arb">شهر</string>
+    <string name="English">English</string>
+    <string name="Arabic">عربي</string>
+    <string name="Eng_Option">_Eng</string>
+    <string name="Arb_Option">_Arb</string>
+</resources>
