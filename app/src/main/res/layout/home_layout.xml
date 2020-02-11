@@ -103,4 +103,16 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/shareFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_anchor="@id/appbar"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/darkBackground"
+        android:src="@drawable/share_icon_white_24dp"
+        />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

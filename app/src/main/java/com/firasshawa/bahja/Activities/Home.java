@@ -2,20 +2,33 @@ package com.firasshawa.bahja.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firasshawa.bahja.Adapters.QuotesViewPagerAdapter;
 import com.firasshawa.bahja.Controls.Data;
+import com.firasshawa.bahja.Controls.Screenshot;
 import com.firasshawa.bahja.Controls.TimeOptions;
 import com.firasshawa.bahja.Models.Quote;
 import com.firasshawa.bahja.R;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -24,7 +37,7 @@ public class Home extends AppCompatActivity {
     ListView motivationList;
     ViewPager quotesViewPager;
     TextView graduationDayCount,MonthValue,DayValue,WeekValue;
-
+    FloatingActionButton shareFAB;
     TimeOptions timeOptions;
     Data data;
     @Override
@@ -36,6 +49,15 @@ public class Home extends AppCompatActivity {
 
         DateCountersSetup();
         ViewPagerSetup();
+
+        shareFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"FAB",Toast.LENGTH_SHORT).show();
+                Screenshot screenshot = new Screenshot(Home.this);
+                screenshot.TakeScreenShot();
+            }
+        });
 
     }
 
@@ -61,6 +83,8 @@ public class Home extends AppCompatActivity {
         WeekValue = findViewById(R.id.WeekValue);
         DayValue = findViewById(R.id.DayValue);
 
+        shareFAB = findViewById(R.id.shareFAB);
+
     }
 
     public void DateCountersSetup(){
@@ -74,7 +98,7 @@ public class Home extends AppCompatActivity {
     public void ViewPagerSetup(){
         QuotesViewPagerAdapter adapter = new QuotesViewPagerAdapter(getApplicationContext(),data.getQuotes());
 
-        quotesViewPager.setPadding(200,0,50,0);
+        quotesViewPager.setPadding(130,0,130,0);
 
         quotesViewPager.setAdapter(adapter);
 
