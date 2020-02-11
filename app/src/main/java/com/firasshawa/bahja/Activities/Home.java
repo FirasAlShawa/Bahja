@@ -1,12 +1,19 @@
 package com.firasshawa.bahja.Activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,12 +41,16 @@ import java.util.Queue;
 
 public class Home extends AppCompatActivity {
 
+    private  int Req_code = 5597;
+
     ListView motivationList;
     ViewPager quotesViewPager;
     TextView graduationDayCount,MonthValue,DayValue,WeekValue;
     FloatingActionButton shareFAB;
     TimeOptions timeOptions;
     Data data;
+    Boolean PermissionStats;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +64,13 @@ public class Home extends AppCompatActivity {
         shareFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"FAB",Toast.LENGTH_SHORT).show();
-                Screenshot screenshot = new Screenshot(Home.this);
-                screenshot.TakeScreenShot();
+                if(PermissionStats) {
+                    Toast.makeText(getApplicationContext(),"Taking Screenshot...",Toast.LENGTH_SHORT).show();
+                    Screenshot screenshot = new Screenshot(Home.this);
+                    screenshot.TakeScreenShot();
+                    Toast.makeText(getApplicationContext(),"Share it now...",Toast.LENGTH_SHORT).show();
+                }else
+                    requestStoragePermission();
             }
         });
 
@@ -66,6 +81,7 @@ public class Home extends AppCompatActivity {
         ViewsSetup();
         timeOptions = new TimeOptions(getApplicationContext());
         data = new Data(getApplicationContext());
+        PermissionStats = false;
 
     }
 
@@ -104,4 +120,47 @@ public class Home extends AppCompatActivity {
 
         quotesViewPager.setCurrentItem(data.getQuotesSize());
     }
+
+    public void requestStoragePermission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission Needed !")
+                    .setMessage("these permissions are needed to take a screenshot and share it !")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActivityCompat.requestPermissions(Home.this,new String[]{
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            },Req_code);
+                        }
+                    })
+                    .setNegativeButton("canel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+        }else{
+            ActivityCompat.requestPermissions(Home.this,new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
+            },Req_code);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == Req_code){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
+                this.PermissionStats = true;
+            }else{
+                Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
+                this.PermissionStats = false;
+
+            }
+        }
+
+    }
+
 }
