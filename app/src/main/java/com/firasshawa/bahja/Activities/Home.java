@@ -32,25 +32,46 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
 
-        Toolbar toolbar = findViewById(R.id.mytoolbar);
-        setSupportActionBar(toolbar);
+        Constructor();
 
+        DateCountersSetup();
+        ViewPagerSetup();
+
+    }
+
+    public void Constructor(){
+        ToolbarSetup();
+        ViewsSetup();
         timeOptions = new TimeOptions(getApplicationContext());
         data = new Data(getApplicationContext());
 
+    }
+
+    public void ToolbarSetup(){
+        Toolbar toolbar = findViewById(R.id.mytoolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    public void ViewsSetup(){
         quotesViewPager = findViewById(R.id.quotesViewPager);
 
         graduationDayCount = findViewById(R.id.graduationDayCount);
+
         MonthValue = findViewById(R.id.MonthValue);
         WeekValue = findViewById(R.id.WeekValue);
         DayValue = findViewById(R.id.DayValue);
 
+    }
+
+    public void DateCountersSetup(){
         graduationDayCount.setText(timeOptions.daysToGraduation() +" "+ getString(R.string.Day_Eng) );
+
         MonthValue.setText(timeOptions.monthsToGraduation()+"");
         WeekValue.setText(timeOptions.weeksToGraduation()+"");
         DayValue.setText(timeOptions.daysToGraduation()+"");
+    }
 
-
+    public void ViewPagerSetup(){
         QuotesViewPagerAdapter adapter = new QuotesViewPagerAdapter(getApplicationContext(),data.getQuotes());
 
         quotesViewPager.setPadding(200,0,50,0);
@@ -58,6 +79,5 @@ public class Home extends AppCompatActivity {
         quotesViewPager.setAdapter(adapter);
 
         quotesViewPager.setCurrentItem(data.getQuotesSize());
-
     }
 }
