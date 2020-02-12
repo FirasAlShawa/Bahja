@@ -14,7 +14,7 @@ public class TimeOptions {
     public SimpleDateFormat simpleDateFormat;
     public final String graduationDate;
     public Context context;
-    SharedPrefs prefs;
+   SharedPrefs prefs;
 
 
     public TimeOptions(Context context) {
@@ -70,35 +70,43 @@ public class TimeOptions {
  * @return int number of days from the first run
  * */
     public int daysFromStart(){
-        long daysInMillisecond = 0L;
-
-        Date startDate = prefs.startDate();
-        Date current = this.calendar.getTime();
-
-        System.out.println(startDate.getTime());
-        System.out.println( current.getTime());
-
-        daysInMillisecond = current.getTime() - startDate.getTime();
-        int days = (int) daysInMillisecond / (1000*60*60*24) ;
-
-        if(days == 0){
-            return prefs.daysFromStart();
-        }
-
-        System.out.println("days " + days);
-
-        return days;
+//        long daysInMillisecond = 0L;
+//
+//        Date startDate = prefs.startDate();
+//        Date current = this.calendar.getTime();
+//
+//        System.out.println(startDate.getTime());
+//        System.out.println( current.getTime());
+//
+//        daysInMillisecond = current.getTime() - startDate.getTime();
+//        int days = (int) daysInMillisecond / (1000*60*60*24) ;
+//
+//        if(days == 0){
+//            return prefs.daysFromStart();
+//        }
+//
+//        System.out.println("days " + days);
+//
+//        return days;
+        return 0 ;
     }
 
     public void checkDays(){
-        int currentDays = daysFromStart();
-        int sharedPrefDays = prefs.daysFromStart();
-        if(currentDays > sharedPrefDays){
-            System.out.println("current : " + currentDays + "\nsharedPrefsDays : "+sharedPrefDays);
-        }else{
-            System.out.println("current : " + currentDays + "\nsharedPrefsDays : "+sharedPrefDays);
-        }
+//        int currentDays = daysFromStart();
+//        int sharedPrefDays = prefs.daysFromStart();
+//        if(currentDays > sharedPrefDays){
+//            System.out.println("current : " + currentDays + "\nsharedPrefsDays : "+sharedPrefDays);
+//        }else{
+//            System.out.println("current : " + currentDays + "\nsharedPrefsDays : "+sharedPrefDays);
+//        }
+    }
 
+    public long getDays(){
+        return this.prefs.getDays();
+    }
+
+    public long modifyDays(){
+        return this.prefs.modifyDays();
     }
 
 

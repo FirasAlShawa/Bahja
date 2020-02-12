@@ -17,13 +17,13 @@ public class SharedPrefs {
     Context context ;
     SharedPreferences sharedPreferences ;
     SharedPreferences.Editor editor ;
-    TimeOptions timeOptions;
+    // TimeOptions timeOptions;
 
     public SharedPrefs(Context context) {
         this.context = context;
         sharedPreferences = context.getSharedPreferences(SHAREDPREF,Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        timeOptions = new TimeOptions(context);
+        // timeOptions = new TimeOptions(context);
     }
 
 /**
@@ -96,9 +96,11 @@ public class SharedPrefs {
 
 
     //SetStartDate
-    public void setStartDate(){
-        editor.putLong(STARTDATE,timeOptions.calendar.getTimeInMillis());
+    public long setStartDate(){
+        long currentDate = currentLong();
+        editor.putLong(STARTDATE,currentDate);
         editor.apply();
+        return currentDate;
     }
 
     //getStartDate
@@ -118,14 +120,33 @@ public class SharedPrefs {
     }
 
     //modifyDays
-    public void modifyDays(){
-        Date current = setupDate(timeOptions.currentLong());
+    public long modifyDays(){
+        Date current = setupDate(currentLong());
         Date start = setupDate(getStartDate());
+
+        System.out.println("current " + current);
+        System.out.println("start " + start);
 
         long days  = calculateDays(current,start);
 
         setDays(days);
+
+        System.out.println("days " + days);
+
+        return days;
     }
+
+    public long modifyDays(long dateInMillis){
+        Date current = setupDate(currentLong());
+        Date start = setupDate(dateInMillis);
+
+        long days  = calculateDays(current,start);
+
+        setDays(days);
+
+        return days;
+    }
+
 
     //Fix Each Date
     public Date setupDate(long timeInMillis){
@@ -158,6 +179,14 @@ public class SharedPrefs {
         c.set(Calendar.MINUTE,0);
         c.set(Calendar.SECOND,0);
         return c;
+    }
+
+    public Date currentDate(){
+        return Calendar.getInstance().getTime();
+    }
+
+    public long currentLong(){
+        return Calendar.getInstance().getTimeInMillis();
     }
 
 

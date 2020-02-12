@@ -52,6 +52,13 @@ public class Home extends AppCompatActivity {
     Data data;
     Boolean PermissionStats;
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        timeOptions.modifyDays();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
