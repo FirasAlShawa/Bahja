@@ -69,18 +69,17 @@ public class Home extends AppCompatActivity {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
 
                     if(Environment.isExternalStorageLegacy()){
+
                         if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
                             requestStoragePermission();
 
-                            Toast.makeText(getApplicationContext(),"Taking Screenshot...",Toast.LENGTH_SHORT).show();
-                            Screenshot screenshot = new Screenshot(Home.this);
-                            screenshot.TakeScreenShot();
-                            Toast.makeText(getApplicationContext(),"Share it now...",Toast.LENGTH_SHORT).show();
-                    }else{
-                        requestStoragePermission();
-                    }
+                            TakeScreenShot();
 
-                }
+                        }else{
+                            requestStoragePermission();
+                        }
+                    }
                 }else{
                     if (ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Home.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         requestStoragePermission();
@@ -93,10 +92,6 @@ public class Home extends AppCompatActivity {
                         requestStoragePermission();
                     }
                 }
-//
-//
-
-
             }
         });
 
@@ -144,6 +139,13 @@ public class Home extends AppCompatActivity {
         quotesViewPager.setAdapter(adapter);
 
         quotesViewPager.setCurrentItem(data.getQuotesSize());
+    }
+
+    public void TakeScreenShot(){
+        Toast.makeText(getApplicationContext(),"Taking Screenshot...",Toast.LENGTH_SHORT).show();
+        Screenshot screenshot = new Screenshot(Home.this);
+        screenshot.TakeScreenShot();
+        Toast.makeText(getApplicationContext(),"Share it now...",Toast.LENGTH_SHORT).show();
     }
 
     public void requestStoragePermission(){

@@ -1,0 +1,65 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.text.ParseException;
+
+public class MyClass {
+    public static void main(String args[]) {
+// Calendar c = Calendar.getInstance();
+//             //  System.out.println((c.get(Calendar.MONTH)+1));
+            
+//             // new SimpleDateFormat("MMM").format(cal.getTime())
+    
+//                 //   System.out.println(new SimpleDateFormat("MMM").format(c.getTime()));
+                  
+//             c.set(Calendar.MONTH,1);
+//             c.set(Calendar.YEAR,2020);
+//             c.set(Calendar.DAY_OF_MONTH,13);
+//             c.set(Calendar.HOUR,0);
+//             c.set(Calendar.MINUTE,0);
+//             c.set(Calendar.SECOND,0);
+//         //   System.out.println(new SimpleDateFormat("MMM").format(c.getTime()));
+
+       Date current = new Date((Long)setMyDate(1,1,2020).getTimeInMillis());
+       Date start =   new Date(1581539189435L);
+    
+         System.out.println(new SimpleDateFormat("E").format(current.getTime()));
+         System.out.println("Month in int =>"+new SimpleDateFormat("MM").format(current.getTime()));
+         System.out.println("Year in int =>"+new SimpleDateFormat("YYYY").format(current.getTime()));
+         System.out.println("Day in int =>"+new SimpleDateFormat("dd").format(current.getTime()));
+        
+         System.out.println("\n\n");
+       
+         System.out.println(new SimpleDateFormat("E").format(start.getTime()));
+         System.out.println("Month in int =>"+new SimpleDateFormat("MM").format(start.getTime()));
+         System.out.println("Year in int =>"+new SimpleDateFormat("YYYY").format(start.getTime()));
+         System.out.println("Day in int =>"+new SimpleDateFormat("dd").format(start.getTime()));
+       
+       
+    //   System.out.println(current+"\n"+start);
+    if(        new SimpleDateFormat("YYYY").format(current.getTime()).equals( new SimpleDateFormat("YYYY").format(start.getTime()))){
+        if(new SimpleDateFormat("MM").format(current.getTime()).equals(new SimpleDateFormat("MM").format(start.getTime()))){
+               System.out.println("diff => " + (Integer.parseInt(new SimpleDateFormat("dd").format(current.getTime()))-Integer.parseInt(new SimpleDateFormat("dd").format(start.getTime()))));
+        }else{
+            System.out.println("Month wrong");
+        }
+    }else{
+        System.out.println("Year wrong");
+    }
+       
+       
+    }
+
+    
+    public static Calendar setMyDate(int day,int month,int year){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.MONTH,month);
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.DAY_OF_MONTH,day);
+        c.set(Calendar.HOUR,0);
+        c.set(Calendar.MINUTE,0);
+        c.set(Calendar.SECOND,0);
+        return c;
+    }
+
+}

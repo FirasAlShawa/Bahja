@@ -101,4 +101,14 @@ public class TimeOptions {
 
     }
 
+
+
+    public Date currentDate(){
+        return this.calendar.getTime();
+    }
+
+    public long currentLong(){
+        return this.calendar.getTimeInMillis();
+    }
+
 }

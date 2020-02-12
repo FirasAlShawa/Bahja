@@ -1,0 +1,83 @@
+    import java.text.SimpleDateFormat;
+    import java.util.Calendar;
+    import java.util.Date;
+    import java.text.ParseException;
+    
+    public class MyClass {
+        public static void main(String args[]) {
+            Calendar c = Calendar.getInstance();
+    
+            // Date current = new Date((Long)setMyDate(12,1,2020).getTimeInMillis());
+            Date current = setupDate(c.getTimeInMillis());
+            Date start =   new Date(1581539189435L);
+    
+            System.out.println(current);
+            System.out.println(start);
+    
+    
+            System.out.println(FormatDate("E" , current));
+                        System.out.println("Day in int =>"+FormatDate("dd" , current));
+            System.out.println("Month in int =>"+FormatDate("MM" , current));
+            System.out.println("Year in int =>"+FormatDate("YYYY" , current));
+
+    
+            System.out.println("\n\n");
+    
+            System.out.println(FormatDate("E" , start));
+                        System.out.println("Day in int =>"+FormatDate("dd" , start));
+            System.out.println("Month in int =>"+FormatDate("MM" , start));
+            System.out.println("Year in int =>"+FormatDate("YYYY" , start));
+
+      
+            System.out.println("\n\n");
+          
+            if(FormatDate("YYYY" , current).equals( FormatDate("YYYY" , start))){
+                if(FormatDate("MM" , current).equals(FormatDate("MM" , start))){
+                    System.out.println("diff => " + (Integer.parseInt(FormatDate("dd" , current))-Integer.parseInt(FormatDate("dd",start))));
+                }else{
+                    System.out.println("Month wrong");
+                }
+            }else{
+                System.out.println("Year wrong");
+            }
+           
+            System.out.println("\n\n");
+
+            System.out.println("diff => " + CalculateDays(current,start));
+            
+        }
+    
+        
+        public static Calendar setMyDate(int day,int month,int year){
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.MONTH,month);
+            c.set(Calendar.YEAR,year);
+            c.set(Calendar.DAY_OF_MONTH,day);
+            c.set(Calendar.HOUR,1);
+            c.set(Calendar.MINUTE,0);
+            c.set(Calendar.SECOND,0);
+            return c;
+        }
+    
+        public static String FormatDate(String key,Date date){
+            return new SimpleDateFormat(key).format(date.getTime());
+        }
+    
+        public static Date setupDate(long timeInMillis){
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date(timeInMillis));
+            c.set(Calendar.HOUR,1);
+            c.set(Calendar.MINUTE,0);
+            c.set(Calendar.SECOND,0);
+            return c.getTime();
+        }
+        
+        public static long CalculateDays(Date current,Date start){
+            long days = current.getTime() - start.getTime();
+            return days / (1000*60*60*24);
+        }
+    
+    }
+ 
+
+
