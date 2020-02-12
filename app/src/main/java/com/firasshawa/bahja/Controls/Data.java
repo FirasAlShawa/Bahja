@@ -40,6 +40,7 @@ public class Data {
 
             ArrayList<Quote> quoteArrayList =  new ArrayList<>(Arrays.asList( new Gson().fromJson(JsonString,Quote[].class)));
 
+            timeOptions.checkDays();
             //TODO this is how to subset the list (last index is not included!)
             quoteArrayList = new ArrayList<>(quoteArrayList.subList(0,timeOptions.daysFromStart()));
 

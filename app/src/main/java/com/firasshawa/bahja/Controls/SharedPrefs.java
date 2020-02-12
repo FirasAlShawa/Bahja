@@ -42,6 +42,8 @@ public class SharedPrefs {
             return sharedPreferences.getInt(DAYFROMSTART,0);
         }
     }
+
+
 /**
  * This function will check if the sharedprefs has the start date
  * if not we will initialize it with the current date
@@ -50,6 +52,7 @@ public class SharedPrefs {
  * */
     public Date startDate(){
         if(sharedPreferences.getLong(STARTDAY,0L) == 0){
+            System.out.println("StartDate Called!");
             editor.putLong(STARTDAY,Calendar.getInstance().getTimeInMillis());
             editor.apply();
 
@@ -57,7 +60,13 @@ public class SharedPrefs {
 
             return Calendar.getInstance().getTime();
         }else{
+            System.out.println(new Date(sharedPreferences.getLong(STARTDAY,0L)).getTime());
             return new Date(sharedPreferences.getLong(STARTDAY,0L));
         }
+    }
+
+    public void increaseDays(int day){
+        editor.putLong(DAYFROMSTART,day);
+        editor.apply();
     }
 }

@@ -50,6 +50,7 @@ public class Screenshot {
 
         File file = new File(dirPath,"screenshot"+new TimeOptions(activity).calendar.getTimeInMillis()+".png");
         try {
+            System.out.println(file.getAbsolutePath());
             FileOutputStream fout = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG,85,fout);
             fout.flush();

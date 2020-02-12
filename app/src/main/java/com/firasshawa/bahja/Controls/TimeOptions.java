@@ -90,5 +90,15 @@ public class TimeOptions {
         return days;
     }
 
+    public void checkDays(){
+        int currentDays = daysFromStart();
+        int sharedPrefDays = prefs.daysFromStart();
+        if(currentDays > sharedPrefDays){
+            System.out.println("current : " + currentDays + "\nsharedPrefsDays : "+sharedPrefDays);
+        }else{
+            System.out.println("current : " + currentDays + "\nsharedPrefsDays : "+sharedPrefDays);
+        }
+
+    }
 
 }
