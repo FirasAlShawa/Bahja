@@ -168,15 +168,16 @@ public class Home extends AppCompatActivity {
 
         AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
 
-        if((PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
+//        if(false){
+            if((PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
 
             System.out.println("Home.java : Alarm is working!");
 
-//            alarmManager.cancel(PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT));
-//
-//            System.out.println("Home.java : Alarm Canceled!!");
-//
-//            Toast.makeText(getApplicationContext(),"Home.java : alarm was on and its canceled" ,Toast.LENGTH_SHORT).show();
+            alarmManager.cancel(PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT));
+
+            System.out.println("Home.java : Alarm Canceled!!");
+
+            Toast.makeText(getApplicationContext(),"Home.java : alarm was on and its canceled" ,Toast.LENGTH_SHORT).show();
 
         }else{
 
@@ -184,11 +185,13 @@ public class Home extends AppCompatActivity {
 
             Calendar AlarmCalender = timeOptions.AlarmCalender();
 
+            System.out.println(AlarmCalender.getTime());
+
             intent.putExtra("quoteOfTheDay",data.quoteOftheDay());
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,AlarmCalender.getTimeInMillis(),AlarmManager.INTERVAL_HOUR*3,pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,AlarmCalender.getTimeInMillis(),AlarmManager.INTERVAL_HOUR,pendingIntent);
 
             System.out.println("Home.java : Alarm is on");
 
@@ -203,6 +206,7 @@ public class Home extends AppCompatActivity {
         AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
 
         if((PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
+//        if(false){
 
             System.out.println("Home.java : Alarm Daily is working!");
 

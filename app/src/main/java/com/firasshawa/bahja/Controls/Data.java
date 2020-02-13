@@ -61,10 +61,10 @@ public class Data {
 
     public String quoteOftheDay(){
         if(!this.quoteArrayList.isEmpty())
-            return quoteArrayList.get(this.CurrentDay).getText();
+            return quoteArrayList.get(this.CurrentDay-1).getText();
         else{
             getQuotes();
-            return quoteArrayList.get(this.CurrentDay).getText();
+            return quoteArrayList.get(this.CurrentDay-1).getText();
         }
     }
 

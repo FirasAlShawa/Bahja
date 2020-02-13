@@ -27,6 +27,7 @@ public class Notification_reciver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.notifyiconsmile48)
                 .setContentTitle("_Bahja")
+                .setContentIntent(pendingIntent)
                 .setContentText(intent.getExtras().getString("quoteOfTheDay"))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.notifyiconross96))
