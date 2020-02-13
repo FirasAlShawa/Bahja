@@ -28,6 +28,10 @@
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
+        <receiver android:name=".Receives.Notification_reciver"/>
+        <receiver android:name=".Receives.Day_reciver"/>
+
+
     </application>
 
 </manifest>

@@ -109,6 +109,9 @@ public class TimeOptions {
         return this.prefs.modifyDays();
     }
 
+    public Calendar AlarmCalender(){
+        return this.prefs.AlarmCalender();
+    }
 
 
     public Date currentDate(){

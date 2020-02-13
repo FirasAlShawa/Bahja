@@ -181,6 +181,17 @@ public class SharedPrefs {
         return c;
     }
 
+    public Calendar AlarmCalender(){
+        long startDate = getStartDate();
+        Calendar alarmCalender = Calendar.getInstance();
+        alarmCalender.setTime(new Date(startDate));
+        alarmCalender.set(Calendar.HOUR,8);
+        alarmCalender.set(Calendar.MINUTE,10);
+        alarmCalender.set(Calendar.SECOND,0);
+        return alarmCalender;
+    }
+
+
     public Date currentDate(){
         return Calendar.getInstance().getTime();
     }

@@ -16,11 +16,13 @@ public class Data {
     Context context;
     private int quotesSize;
     private TimeOptions timeOptions;
-
+    private int CurrentDay;
+    ArrayList<Quote> quoteArrayList;
     public Data(Context context) {
         this.context = context;
         this.quotesSize = 0;
         this.timeOptions = new TimeOptions(context);
+        this.CurrentDay = 0 ;
     }
 
     public int getQuotesSize() {
@@ -38,10 +40,11 @@ public class Data {
 
             String JsonString = new String(buffer,"UTF-8");
 
-            ArrayList<Quote> quoteArrayList =  new ArrayList<>(Arrays.asList( new Gson().fromJson(JsonString,Quote[].class)));
+            quoteArrayList =  new ArrayList<>(Arrays.asList( new Gson().fromJson(JsonString,Quote[].class)));
 
             // timeOptions.checkDays();
             long days = timeOptions.getDays();
+            this.CurrentDay = (int)days;
             //TODO this is how to subset the list (last index is not included!)
             quoteArrayList = new ArrayList<>(quoteArrayList.subList(0,(int)days));
 
@@ -54,6 +57,15 @@ public class Data {
         }
 
         return new ArrayList<>();
+    }
+
+    public String quoteOftheDay(){
+        if(!this.quoteArrayList.isEmpty())
+            return quoteArrayList.get(this.CurrentDay).getText();
+        else{
+            getQuotes();
+            return quoteArrayList.get(this.CurrentDay).getText();
+        }
     }
 
 }

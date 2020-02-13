@@ -10,6 +10,8 @@ import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +33,8 @@ import com.firasshawa.bahja.Controls.Screenshot;
 import com.firasshawa.bahja.Controls.TimeOptions;
 import com.firasshawa.bahja.Models.Quote;
 import com.firasshawa.bahja.R;
+import com.firasshawa.bahja.Receives.Day_reciver;
+import com.firasshawa.bahja.Receives.Notification_reciver;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,6 +42,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Queue;
 
 public class Home extends AppCompatActivity {
@@ -68,6 +73,9 @@ public class Home extends AppCompatActivity {
 
         DateCountersSetup();
         ViewPagerSetup();
+
+        quotesDailyAlarm();
+        ModifyDailyAlarm();
 
         shareFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +161,73 @@ public class Home extends AppCompatActivity {
         Screenshot screenshot = new Screenshot(Home.this);
         screenshot.TakeScreenShot();
         Toast.makeText(getApplicationContext(),"Share it now...",Toast.LENGTH_SHORT).show();
+    }
+
+    public void quotesDailyAlarm(){
+        Intent intent = new Intent(getApplicationContext(), Notification_reciver.class);
+
+        AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if((PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
+
+            System.out.println("Home.java : Alarm is working!");
+
+//            alarmManager.cancel(PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT));
+//
+//            System.out.println("Home.java : Alarm Canceled!!");
+//
+//            Toast.makeText(getApplicationContext(),"Home.java : alarm was on and its canceled" ,Toast.LENGTH_SHORT).show();
+
+        }else{
+
+            System.out.println("Home.java : new Alarm setup");
+
+            Calendar AlarmCalender = timeOptions.AlarmCalender();
+
+            intent.putExtra("quoteOfTheDay",data.quoteOftheDay());
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,AlarmCalender.getTimeInMillis(),AlarmManager.INTERVAL_HOUR*3,pendingIntent);
+
+            System.out.println("Home.java : Alarm is on");
+
+            Toast.makeText(getApplicationContext(),"alarm on" ,Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+    public void ModifyDailyAlarm(){
+        Intent intent = new Intent(getApplicationContext(), Day_reciver.class);
+
+        AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if((PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
+
+            System.out.println("Home.java : Alarm Daily is working!");
+
+//            alarmManager.cancel(PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT));
+//
+//            System.out.println("Home.java : Alarm Daily Canceled!!");
+//
+//            Toast.makeText(getApplicationContext(),"Home.java :Daily alarm  was on and its canceled" ,Toast.LENGTH_SHORT).show();
+
+        }else{
+
+            System.out.println("Home.java : new Daily Alarm setup");
+
+            Calendar AlarmCalender = timeOptions.AlarmCalender();
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,AlarmCalender.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+
+            System.out.println("Home.java : Alarm Daily is on");
+
+            Toast.makeText(getApplicationContext(),"alarm on" ,Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     public void requestStoragePermission(){
