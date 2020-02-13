@@ -13,6 +13,8 @@ public class SharedPrefs {
     public static final String SHAREDPREF = "MySharedPrefs";
     public static final String DAYFROMSTART = "DayFromStart";
     public static final String STARTDATE = "StartDate";
+    public static final String DAILYBRODCAST = "Daily";
+    public static final String NOTIFICATIONBROADCAST = "NotificationBroadcast";
 
     Context context ;
     SharedPreferences sharedPreferences ;
@@ -113,7 +115,6 @@ public class SharedPrefs {
         editor.putLong(DAYFROMSTART,value);
         editor.apply();
     }
-
     //getDays
     public long getDays(){
         return sharedPreferences.getLong(DAYFROMSTART,0L);
@@ -200,7 +201,20 @@ public class SharedPrefs {
         return Calendar.getInstance().getTimeInMillis();
     }
 
+    public void setUpBroadcast(String key ,boolean state){
+        editor.putBoolean(key,state);
+        editor.apply();
+    }
 
+    public boolean getBroadcast(String key){
+        return sharedPreferences.getBoolean(key,false);
+    }
+
+
+    public void removeBrodcast(String key){
+        editor.remove(key);
+        editor.apply();
+    }
 
 
 

@@ -25,14 +25,13 @@ public class Notification_reciver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context,100,repeating_intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, App.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.notifyiconsmile48)
-                .setContentTitle("_Bahja")
+                .setSmallIcon(R.drawable.university)
+                .setContentTitle("بجهة")
                 .setContentIntent(pendingIntent)
                 .setContentText(intent.getExtras().getString("quoteOfTheDay"))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.notifyiconross96))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.university))
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .setBigContentTitle("_Bahja")
                         .bigText(intent.getExtras().getString("quoteOfTheDay"))
                 );
 

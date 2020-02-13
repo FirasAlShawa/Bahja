@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.firasshawa.bahja.Adapters.QuotesViewPagerAdapter;
 import com.firasshawa.bahja.Controls.Data;
 import com.firasshawa.bahja.Controls.Screenshot;
+import com.firasshawa.bahja.Controls.SharedPrefs;
 import com.firasshawa.bahja.Controls.TimeOptions;
 import com.firasshawa.bahja.Models.Quote;
 import com.firasshawa.bahja.R;
@@ -75,7 +76,7 @@ public class Home extends AppCompatActivity {
         ViewPagerSetup();
 
         quotesDailyAlarm();
-        ModifyDailyAlarm();
+        NotificationDailyAlarm();
 
         shareFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,9 +131,9 @@ public class Home extends AppCompatActivity {
 
         graduationDayCount = findViewById(R.id.graduationDayCount);
 
-        MonthValue = findViewById(R.id.MonthValue);
-        WeekValue = findViewById(R.id.WeekValue);
-        DayValue = findViewById(R.id.DayValue);
+//        MonthValue = findViewById(R.id.MonthValue);
+//        WeekValue = findViewById(R.id.WeekValue);
+//        DayValue = findViewById(R.id.DayValue);
 
         shareFAB = findViewById(R.id.shareFAB);
 
@@ -141,9 +142,9 @@ public class Home extends AppCompatActivity {
     public void DateCountersSetup(){
         graduationDayCount.setText(timeOptions.daysToGraduation() +" "+ getString(R.string.Day_Eng) );
 
-        MonthValue.setText(timeOptions.monthsToGraduation()+"");
-        WeekValue.setText(timeOptions.weeksToGraduation()+"");
-        DayValue.setText(timeOptions.daysToGraduation()+"");
+//        MonthValue.setText(timeOptions.monthsToGraduation()+"");
+//        WeekValue.setText(timeOptions.weeksToGraduation()+"");
+//        DayValue.setText(timeOptions.daysToGraduation()+"");
     }
 
     public void ViewPagerSetup(){
@@ -163,74 +164,64 @@ public class Home extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Share it now...",Toast.LENGTH_SHORT).show();
     }
 
-    public void quotesDailyAlarm(){
+    public void quotesDailyAlarm() {
         Intent intent = new Intent(getApplicationContext(), Notification_reciver.class);
 
-        AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-//        if(false){
-            if((PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
 
-            System.out.println("Home.java : Alarm is working!");
+        boolean flag = timeOptions.getBroadcast(SharedPrefs.DAILYBRODCAST);
 
-            alarmManager.cancel(PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT));
+        if(!flag) {
 
-            System.out.println("Home.java : Alarm Canceled!!");
 
-            Toast.makeText(getApplicationContext(),"Home.java : alarm was on and its canceled" ,Toast.LENGTH_SHORT).show();
+        this.timeOptions.setBroadcast(SharedPrefs.DAILYBRODCAST, true);
 
-        }else{
+        System.out.println("Home.java : new Alarm setup");
 
-            System.out.println("Home.java : new Alarm setup");
+        Calendar AlarmCalender = timeOptions.AlarmCalender();
 
-            Calendar AlarmCalender = timeOptions.AlarmCalender();
+        System.out.println(AlarmCalender.getTime());
 
-            System.out.println(AlarmCalender.getTime());
+        intent.putExtra("quoteOfTheDay", data.quoteOftheDay());
 
-            intent.putExtra("quoteOfTheDay",data.quoteOftheDay());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 666, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),666,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, AlarmCalender.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, pendingIntent);
 
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,AlarmCalender.getTimeInMillis(),AlarmManager.INTERVAL_HOUR,pendingIntent);
+        System.out.println("Home.java : Alarm is now on");
 
-            System.out.println("Home.java : Alarm is on");
-
-            Toast.makeText(getApplicationContext(),"alarm on" ,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Daily On",Toast.LENGTH_SHORT).show();
 
         }
 
     }
-    public void ModifyDailyAlarm(){
+    public void NotificationDailyAlarm(){
         Intent intent = new Intent(getApplicationContext(), Day_reciver.class);
 
         AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
 
-        if((PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT)) != null){
-//        if(false){
+//        new SharedPrefs(getApplicationContext()).removeBrodcast(SharedPrefs.NOTIFICATIONBROADCAST);
 
-            System.out.println("Home.java : Alarm Daily is working!");
+        boolean flag = timeOptions.getBroadcast(SharedPrefs.NOTIFICATIONBROADCAST);
 
-//            alarmManager.cancel(PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT));
-//
-//            System.out.println("Home.java : Alarm Daily Canceled!!");
-//
-//            Toast.makeText(getApplicationContext(),"Home.java :Daily alarm  was on and its canceled" ,Toast.LENGTH_SHORT).show();
+        if(!flag) {
 
-        }else{
+            this.timeOptions.setBroadcast(SharedPrefs.NOTIFICATIONBROADCAST, true);
 
             System.out.println("Home.java : new Daily Alarm setup");
 
             Calendar AlarmCalender = timeOptions.AlarmCalender();
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),667,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 667, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,AlarmCalender.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, AlarmCalender.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-            System.out.println("Home.java : Alarm Daily is on");
+            System.out.println("Home.java : Alarm Daily is now on");
 
-            Toast.makeText(getApplicationContext(),"alarm on" ,Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getApplicationContext(),"Notify On",Toast.LENGTH_SHORT).show();
         }
+
 
     }
 
@@ -276,4 +267,9 @@ public class Home extends AppCompatActivity {
 
     }
 
+    public void removeBroadcast(){
+        new SharedPrefs(getApplicationContext()).removeBrodcast(SharedPrefs.DAILYBRODCAST);
+        new SharedPrefs(getApplicationContext()).removeBrodcast(SharedPrefs.NOTIFICATIONBROADCAST);
+
+    }
 }

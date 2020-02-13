@@ -113,6 +113,12 @@ public class TimeOptions {
         return this.prefs.AlarmCalender();
     }
 
+    public boolean getBroadcast(String key){
+        return this.prefs.getBroadcast(key);
+    }
+    public void setBroadcast(String key,boolean state){
+        this.prefs.setUpBroadcast(key,state);
+    }
 
     public Date currentDate(){
         return this.calendar.getTime();

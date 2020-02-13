@@ -30,8 +30,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:src="@drawable/university" />
 
                 <TextView
@@ -76,7 +76,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:fillViewport="true"
         android:layout_marginTop="-5dp"
@@ -89,13 +89,37 @@
             android:orientation="vertical"
             android:fillViewport="true"
             >
-
             <include android:layout_width="match_parent"
                 android:layout_height="300dp"
                 layout="@layout/quotes_layout"/>
-            <include android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/graduation_info_layout"/>
+
+
+<!--&lt;!&ndash;            <include android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                layout="@layout/graduation_info_layout"/>&ndash;&gt;-->
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    android:gravity="center">-->
+<!--    <ImageButton-->
+<!--        android:id="@+id/loveMessage"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="250dp"-->
+<!--        android:src="@drawable/graduation_hat"-->
+<!--        android:background="@android:color/transparent"-->
+
+<!--        ></ImageButton>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Tab to see the Message"-->
+<!--        -->
+<!--        ></TextView>-->
+
+<!--</LinearLayout>-->
 
 
         </LinearLayout>
@@ -113,6 +137,8 @@
         android:backgroundTint="@color/darkBackground"
         android:src="@drawable/share_icon_white_24dp"
         />
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

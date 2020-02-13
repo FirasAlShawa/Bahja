@@ -15,6 +15,11 @@ public class App extends Application {
 
         prefs = new SharedPrefs(this);
 
+//        prefs.sharedPreferences.edit().remove(prefs.DAYFROMSTART);
+//        prefs.sharedPreferences.edit().apply();
+//
+//        prefs.setDays(1);
+
         if(prefs.getStartDate() == 0L){
             long startDateinMillis = prefs.setStartDate();
             prefs.modifyDays(startDateinMillis);
